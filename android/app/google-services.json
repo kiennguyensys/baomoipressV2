@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "741636729437",
+    "firebase_url": "https://baomoipressv2-802aa.firebaseio.com",
+    "project_id": "baomoipressv2-802aa",
+    "storage_bucket": "baomoipressv2-802aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741636729437:android:38acc245f3207a75c73bb4",
+        "android_client_info": {
+          "package_name": "app.baomoi.press"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741636729437-751dd6av6ce8304ke1pdup24a02q20mb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.baomoi.press",
+            "certificate_hash": "a46c4825b2f497f5a2190f3b4d2c9e30edbf3ebf"
+          }
+        },
+        {
+          "client_id": "741636729437-psel068bokuuodoar0o7hggnba1pvvqh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqctp91mtSpAppdJLcLz9kf6xE1LWgzX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741636729437-psel068bokuuodoar0o7hggnba1pvvqh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "741636729437-d2vhp6d7o8280sc5r43c0g4k9atf5rek.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.baomoi.press"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
