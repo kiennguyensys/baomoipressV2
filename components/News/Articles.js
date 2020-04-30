@@ -55,7 +55,7 @@ const Post = React.memo(props => {
         // post with video format
         return <Video item={item} index={index} shouldPushAnotherScreen={shouldPushAnotherScreen} navigation={navigation} />
     }else{
-        if((item.featured_post == "on") && (position === "List Trang Chủ")){
+        if((item.featured_post == "on") && (item.otherFeaturedPosts) && (position === "List Trang Chủ")){
             if(index === 0){
                 return (
                         <FeaturedPost item={item} index={index} navigation={navigation} shouldPushAnotherScreen={shouldPushAnotherScreen} />

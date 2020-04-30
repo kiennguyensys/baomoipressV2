@@ -152,13 +152,15 @@ class HomeScreen extends React.Component {
                     axios.get(api_url + "posts?meta_key=ht_featured&meta_value=on&per_page=4",{
                         cancelToken: this.cancelTokenSource.token
                     }),
-                    axios.get(api_url + "posts?meta_key=ht_featured&meta_value=off&per_page=10",{
+                    axios.get(api_url + "posts?per_page=10",{
                         cancelToken: this.cancelTokenSource.token
                     })
                 ])
                 .then(axios.spread((featuredPostRes, articlesRes) => {
                     let featuredPost = featuredPostRes.data[0]
                     featuredPost.otherFeaturedPosts = [featuredPostRes.data[1], featuredPostRes.data[2], featuredPostRes.data[3]]
+
+                    articlesRes.data = articlesRes.data.filter((item, index) => item.id !== featuredPost.id)
 
                     const articlesData = [featuredPost, ...articlesRes.data]
                     const articlesWithAds = articlesData.map((item, index) => {
@@ -181,7 +183,7 @@ class HomeScreen extends React.Component {
                     }
                 })
             } else {
-                axios.get(api_url + "posts?meta_key=ht_featured&meta_value=off&orderby=date&order=desc&before=" + this.state.latestPostDate + "&per_page=20&page=" + this.state.page,{
+                axios.get(api_url + "posts?exclude=" + this.state.articles[0].id + "&orderby=date&order=desc&before=" + this.state.latestPostDate + "&per_page=20&page=" + this.state.page,{
                     cancelToken: this.cancelTokenSource.token
                 })
                 .then(res => {

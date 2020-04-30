@@ -132,7 +132,7 @@ class SplashScreen extends React.Component {
             axios.get(api_url + "posts?meta_key=ht_featured&meta_value=on&per_page=4",{
                 cancelToken: this.cancelTokenSource.token
             }),
-            axios.get(api_url + "posts?meta_key=ht_featured&meta_value=off&per_page=10",{
+            axios.get(api_url + "posts?per_page=10",{
                 cancelToken: this.cancelTokenSource.token
             }),
             axios.get(api_url + "posts?filter[post_format]=post-format-video&per_page=10",{
@@ -155,6 +155,9 @@ class SplashScreen extends React.Component {
             .then(axios.spread(async(featuredPostRes, articlesRes, videosRes, tab0Res, tab1Res, tab2Res, tab3Res) => {
                 const featuredPost = featuredPostRes.data[0]
                 featuredPost.otherFeaturedPosts = [featuredPostRes.data[1], featuredPostRes.data[2], featuredPostRes.data[3]]
+
+                articlesRes.data = articlesRes.data.filter((item, index) => item.id !== featuredPost.id)
+
 
                 let isDataCached = {}
                 isDataCached[date] = "true"
