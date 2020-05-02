@@ -208,11 +208,12 @@ class UserProfileEditScreen extends React.Component {
         } else {
             const existingAccount = await checkAccountExisting(result.id, "facebook")
             if(!existingAccount) {
-                Alert.alert('Tài khoản đã được liên kết');
+                Alert.alert('Thành công! Tài khoản đã được liên kết');
                 await updateUserFbToken(this.props.user.id, result.id)
                 this.props.updateUser(this.props.user.id)
-            } else Alert.alert('Tài khoản đã tồn tại')
+            } else Alert.alert('Tài khoản đã được sử dụng')
         }
+        LoginManager.logOut()
     }
 
     render(){

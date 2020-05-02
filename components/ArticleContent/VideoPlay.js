@@ -43,6 +43,7 @@ const VideoContent = React.memo(props => {
     if(props.src){
         return (
             <WebView
+                  useWebKit={true}
                   style={{ flex:1, overflow: 'hidden', opacity: 0.99 }}
                   allowsFullscreenVideo={true}
                   source={{uri: props.src+"?autoplay=1" }}

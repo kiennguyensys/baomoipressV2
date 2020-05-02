@@ -50,6 +50,7 @@ class SignInModal extends React.PureComponent {
         } else {
           Alert.alert('Đăng nhập thành công!');
           this.props.signInWithFB(result)
+          LoginManager.logOut()
         }
     }
 

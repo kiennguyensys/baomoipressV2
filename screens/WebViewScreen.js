@@ -53,6 +53,7 @@ export default class WebViewScreen extends Component {
                     </View>
                 }
                 <WebView
+                    useWebKit={true}
                     source={{uri: this.props.navigation.getParam("uri")}}
                     style={{flex: 1, overflow: 'hidden', opacity: 0.99 }}
                     onLoadProgress={({ nativeEvent }) => {

@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
 const htmlRenderers = {
     iframe: (htmlAttribs, children, convertedCSSStyles, passProps) => (
             <WebView
+                useWebKit={true}
                 source={{uri: htmlAttribs.src}}
                 style={{width: screenWidth, height: screenWidth*9/16, overflow: 'hidden', opacity: 0.99, marginLeft: -10 }}
             />
