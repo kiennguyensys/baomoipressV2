@@ -315,7 +315,6 @@ export const signOut = () => {
     AsyncStorage.removeItem('user')
     AsyncStorage.removeItem('userToken')
 
-    if(firebase.auth().currentUser) firebase.auth().signOut()
     return {
         type: SIGN_OUT
     }

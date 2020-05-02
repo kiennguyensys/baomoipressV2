@@ -37,10 +37,14 @@ class PhoneAuthScreen extends Component {
                 else {
                     Alert.alert("Đăng nhập thành công!")
                     this.props.signInWithPhoneNumber(this.state.countryCode + this.state.phone, user.uid, "Guest")
+
                     requestAnimationFrame(() => {
                         this.props.navigation.pop()
                     })
                 }
+
+                firebase.auth().signOut()
+
             }
         });
     }
@@ -102,7 +106,6 @@ class PhoneAuthScreen extends Component {
           await updateUserPhoneToken(this.props.user.id, uid)
           await updateUserPhoneNumber(this.props.user.id, this.state.countryCode + this.state.phone)
           Alert.alert('Tài khoản đã được liên kết')
-          firebase.auth().signOut()
           this.props.updateUserData(this.props.user.id)
           this.props.navigation.goBack()
       }

@@ -94,11 +94,6 @@ export default class CustomFullScreenAd extends Component {
                                     source={AppIcon}
                                     style={{ width: 50 , height: 50, borderRadius: 5 }}
                                 />
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={styles.logoText}>BÁO MỚI </Text>
-                                <Text style={styles.dotText}></Text>
-                                <Text style={styles.logoText}>press</Text>
-                                </View>
                             </View>
 
                         </TouchableOpacity>
@@ -140,7 +135,7 @@ const styles = StyleSheet.create({
     },
     logoSection: {
         width: '100%',
-        height: 100,
+        height: 60,
         justifyContent: 'flex-start',
         alignItems: 'center',
         position: 'absolute',

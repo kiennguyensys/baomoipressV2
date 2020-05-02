@@ -44,7 +44,8 @@ class SignInModal extends React.PureComponent {
     FBLoginCallback = async(error, result) => {
 
         if (error) {
-          Alert.alert('Đã có lỗi xảy ra');
+          alert(error.errorMessage);
+
           //console.log(error.errorMessage);
         } else {
           Alert.alert('Đăng nhập thành công!');
@@ -89,11 +90,9 @@ class SignInModal extends React.PureComponent {
                 })
                 .catch(
                     error => {
-                        //console.log(JSON.stringify(error));
-                        Alert.alert("Lỗi xảy ra! Hãy quay lại sau")
+                        Alert.alert("Lỗi xảy ra, vui lòng thử lại lúc khác")
                     }
                 );
-
         }
     }
 

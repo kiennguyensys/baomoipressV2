@@ -163,7 +163,7 @@ class StandardArticle extends React.Component {
                           </TouchableOpacity>
 
                           <TouchableOpacity
-                            onPress={() => this.openWebView(this.props.article.source_link)}>
+                            onPress={() => Linking.openURL(this.props.article.source_link)}>
                               <BaomoiText style={{ fontSize: 16*textSizeRatio, color: "#696969" }}>- Link gốc</BaomoiText>
                           </TouchableOpacity>
                     </View>

@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 import { api_url, acf_url } from '../constants/API.js';
 import { checkAuth } from '../store/actions/sessionActions';
 import { checkUI } from '../store/actions/UIActions';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/messaging';
 import Ads from '../components/Ads/Ads.js';
 import axios from 'axios';
 
@@ -25,7 +27,19 @@ class SplashScreen extends React.Component {
     constructor(props) {
         super(props);
         this.checkInternetConnection()
-        this.state = { shouldShowAdBeforeNavigating: false }
+        this.state = { shouldShowAdBeforeNavigating: false, shouldOpenMessagingArticle: false }
+        this.initialMessagingListener = firebase.messaging()
+            .getInitialNotification()
+            .then(remoteMessage => {
+                if(remoteMessage && remoteMessage.data.slug) {
+                    this.setState({ shouldOpenMessagingArticle: true })
+                    AsyncStorage.setItem("initialNotificationSlug", remoteMessage.data.slug)
+
+                } else {
+                    AsyncStorage.setItem("initialNotificationSlug", "")
+                }
+            });
+
     }
 
     checkInternetConnection = () => {
@@ -68,7 +82,7 @@ class SplashScreen extends React.Component {
         if(isDataCached && isDataCached[date]) {
             //Today's data has been cached
             setTimeout(() => {
-                if(!this.state.shouldShowAdBeforeNavigating)
+                if(!this.state.shouldShowAdBeforeNavigating || this.state.shouldOpenMessagingArticle)
                     this.props.navigation.navigate("HomeScreen")
             }, 2000)
 
@@ -177,7 +191,7 @@ class SplashScreen extends React.Component {
                 AsyncStorage.setItem('isDataCached', JSON.stringify(isDataCached))
                     .then(data => {
                         //caching done! Switching to HomeScreen
-                        if(!this.state.shouldShowAdBeforeNavigating)
+                        if(!this.state.shouldShowAdBeforeNavigating || this.state.shouldOpenMessagingArticle)
                             this.props.navigation.navigate("HomeScreen")
 
                     })
@@ -217,7 +231,9 @@ class SplashScreen extends React.Component {
     render() {
         return(
                 <ImageBackground source={splashLogo} style={styles.image}>
-                    <Ads adPosition="Khởi động" navigation={this.props.navigation} shouldHideDivider />
+                    {!this.state.shouldOpenMessagingArticle &&
+                     <Ads adPosition="Khởi động" navigation={this.props.navigation} shouldHideDivider />
+                    }
                 </ImageBackground>
         )
     }

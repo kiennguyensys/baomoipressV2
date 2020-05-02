@@ -24,6 +24,7 @@ import ReferenceInputModal from '../Modals/ReferenceInputModal.js';
 import UserShareTokenModal from '../Modals/UserShareTokenModal.js';
 import { api_url, acf_url } from '../../constants/API.js';
 import { signOut, checkAuth, updateUserData } from '../../store/actions/sessionActions';
+import { LoginManager } from "react-native-fbsdk";
 import FastImage from 'react-native-fast-image';
 import AdMobRewardedAd from '../Ads/Admob/AdmobRewardedAd';
 
@@ -196,6 +197,8 @@ class SideBar extends React.Component {
     }
 
     logOut = () => {
+        if(this.props.user.email.includes("facebook"))
+            LoginManager.logOut()
         this.props.logOut()
         this.props.checkAuth()
     }

@@ -20,7 +20,8 @@ export default class App extends Component {
     async componentDidMount() {
         await this.registerAppWithFCM()
         this.checkPermission();
-        this.createRemoteMessageListeners()
+        this.handleInitialNotification();
+        this.createRemoteMessageListeners();
     };
 
     async registerAppWithFCM() {
@@ -68,6 +69,13 @@ export default class App extends Component {
         }
     }
 
+    handleInitialNotification = async() => {
+        const slug = await AsyncStorage.getItem("initialNotificationSlug")
+        if(slug && slug.length) {
+            this.props.onPressArticle(slug)
+        }
+    }
+
     async createRemoteMessageListeners() {
         this.messageListener = firebase.messaging().onMessage(async message => {
             const data = message.data
@@ -77,7 +85,6 @@ export default class App extends Component {
                 title: data.title,
                 sound: "chime.aiff",
                 silent: false,
-                link: data.link || '',
                 userInfo: { slug: data.slug }
             });
         });
@@ -90,17 +97,6 @@ export default class App extends Component {
                 }
             }
         });
-
-        this.initialListener = firebase.messaging()
-            .getInitialNotification()
-            .then(remoteMessage => {
-                if(remoteMessage) {
-                    const slug = remoteMessage.data.slug
-                    if(slug && slug.length){
-                        this.props.onPressArticle(slug)
-                    }
-                }
-            });
 
         this.headlessListener = firebase.messaging().setBackgroundMessageHandler(async remoteMessage => {
             console.log('Message handled in the background!', remoteMessage);

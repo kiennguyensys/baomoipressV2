@@ -218,9 +218,11 @@ class HomeScreen extends React.Component {
         })
         .then(res => {
                 if(res.data[0]){
-                    this.props.navigation.navigate("Article", {
-                                       Article: res.data[0]
-                                   })
+                    requestAnimationFrame(() => {
+                        this.props.navigation.push("Article", {
+                                           Article: res.data[0]
+                        })
+                    })
                 }
         })
         .catch(err => console.log(err))
@@ -307,7 +309,6 @@ class HomeScreen extends React.Component {
     }
 
     onPressArticleNotif = (slug) => {
-        console.log("on Press Article Notif")
         this.findNotificationArticle(slug)
     }
 
