@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Platform, Image } from "react-native";
+import { StyleSheet, Text, View, Platform, Image, AsyncStorage } from "react-native";
 import axios from 'axios';
 import { acf_url } from "../../constants/API.js";
 import BannerNativeAd from "./FacebookAd/FacebookNativeBannerAd.js";
 import MediaNativeAd from "./FacebookAd/FacebookNativeMediaAd.js";
 import { NativeAdsManager, AdSettings } from 'react-native-fbads';
+const adsManager = new NativeAdsManager('658766681193257_942159016187354', 2)
 
 export default class NativeAd extends React.Component {
     state = {
@@ -15,8 +16,8 @@ export default class NativeAd extends React.Component {
     }
 
     async componentDidMount(){
-        const adsManager = await new NativeAdsManager(this.props.ads.adID, 2)
-        this.setState({ adsManager: adsManager })
+
+        //this.setState({ adsManager: adsManager })
     }
 
     render() {
@@ -25,8 +26,8 @@ export default class NativeAd extends React.Component {
         if(type === 'media') {
             return (
                 <View style={styles.mediaContainer}>
-                    {(this.props.isCurrentFocused && this.state.adsManager) &&
-                     <MediaNativeAd adsManager={this.state.adsManager} />
+                    {(this.props.isCurrentFocused) &&
+                     <MediaNativeAd adsManager={adsManager} />
                     }
                 </View>
             );
@@ -34,8 +35,8 @@ export default class NativeAd extends React.Component {
         else if(type === 'banner') {
             return (
                 <View style={styles.bannerContainer}>
-                    {(this.props.isCurrentFocused && this.state.adsManager) &&
-                     <BannerNativeAd adsManager={this.state.adsManager} />
+                    {(this.props.isCurrentFocused) &&
+                     <BannerNativeAd adsManager={adsManager} />
                     }
                 </View>
             );

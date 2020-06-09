@@ -54,7 +54,7 @@ class ReferenceInputModal extends React.PureComponent {
         })
         .then(res => {
             if(res.data[0]){
-                if(res.data[0].id == user.id || user.acf.hasEnterReferenceCode){
+                if(res.data[0].id == user.id || user.acf.hasEnteredReferenceCode){
                     this.setState({text : ''})
                     Alert.alert('Không thành công!')
                 }

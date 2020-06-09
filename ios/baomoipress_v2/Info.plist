@@ -47,6 +47,7 @@
 	<string>ca-app-pub-2499362550366407~4749279826</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>itms-apps</string>
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>

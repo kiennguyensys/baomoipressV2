@@ -82,7 +82,7 @@ class CommentModal extends React.PureComponent{
               cancelToken: this.cancelTokenSource.token
           })
           .then(res => {
-              Alert.alert('Thành công')
+              Alert.alert('Thành công! Bình luận đang được duyệt')
               this.props.updateArticle()
           })
           .catch(err => console.log(err))

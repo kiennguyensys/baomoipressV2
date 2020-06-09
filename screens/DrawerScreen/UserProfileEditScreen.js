@@ -70,12 +70,12 @@ class UserProfileEditScreen extends React.Component {
         .catch(err => console.log(err))
 
         const acfData = new FormData()
-        acfData.append("fields[birth_date]", this.state.birth_date || "Chưa cập nhật")
+        acfData.append("fields[birth_date]", this.state.birth_date)
         acfData.append("fields[age]", this.state.age)
         acfData.append("fields[gender]", this.state.gender)
         acfData.append("fields[so_thich]", this.state.so_thich)
-        acfData.append("fields[custom_email]", this.state.user_email || "Chưa cập nhật")
-        acfData.append("fields[location]", this.state.location || "Chưa cập nhật")
+        acfData.append("fields[custom_email]", this.state.user_email || "")
+        acfData.append("fields[location]", this.state.location || "")
 
         axios({
             method: "POST",
@@ -248,11 +248,11 @@ class UserProfileEditScreen extends React.Component {
                 <ScrollView>
                     <View style={[styles.container, { backgroundColor: backgroundColor }]}>
 
-                            <Text style={[styles.titleText, { color: textColor }]}>GENERAL INFORMATION</Text>
+                            <Text style={[styles.titleText, { color: textColor }]}>THÔNG TIN HỒ SƠ</Text>
 
                             <View style={styles.profileSection}>
                                 <View style={styles.photoView}>
-                                    <Text style={{ color: textColor }}>Profile Photo</Text>
+                                    <Text style={{ color: textColor }}>Ảnh đại diện</Text>
                                     <TouchableOpacity style={styles.photo} onPress={this.updateAvatar}>
                                         <FastImage
                                             style={styles.image}
@@ -333,7 +333,7 @@ class UserProfileEditScreen extends React.Component {
                             <Text style={[styles.labelText, { color: textColor }]}>Số điện thoại</Text>
                             {!user.email.includes("mobile") ?
                             <TouchableOpacity onPress={this.PhoneLinking} style={[styles.selectBtnView, { marginBottom: 0 }]}>
-                                <Text style={styles.selectBtnText}>{(user.acf.phoneNumber) ? user.acf.phoneNumber + " / Nhấp vào để thay đổi" : "Nhấp vào để liên kết"}</Text>
+                                <Text style={styles.selectBtnText} multiline>{(user.acf.phoneNumber) ? user.acf.phoneNumber + " / Thay đổi" : "Nhấp vào để liên kết"}</Text>
                             </TouchableOpacity> :
                             <View style={[styles.selectBtnView, { marginBottom: 0 }]}>
                                 <Text style={styles.selectBtnText}>{user.acf.phoneNumber}</Text>
@@ -343,7 +343,7 @@ class UserProfileEditScreen extends React.Component {
                             <Text style={[styles.labelText, { color: textColor }]}>Tài khoản Facebook</Text>
                             {!user.email.includes("facebook") ?
                             <TouchableOpacity onPress={this.FacebookLinking} style={[styles.selectBtnView, { marginBottom: 10 }]}>
-                                <Text style={styles.selectBtnText}>{user.acf.fbToken && "Đã liên kết, nhấp vào để thay đổi" || "Nhấp vào để liên kết"}</Text>
+                                <Text style={styles.selectBtnText} multiline>{user.acf.fbToken && "Đã liên kết, nhấp vào để thay đổi" || "Nhấp vào để liên kết"}</Text>
                             </TouchableOpacity> :
                             <View style={[styles.selectBtnView, { marginBottom: 10 } ]}>
                                 <Text style={styles.selectBtnText}>{user.name}</Text>

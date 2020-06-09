@@ -92,9 +92,9 @@ class VideoPlay extends React.PureComponent {
           // Loop through the words
           var contents = words.map((word,i) => {
 
-            if (word.includes('youtube.com')){
-                result = word.replace('src=', '').replace(new RegExp('"', 'g'), '')
-            }
+            // if (word.includes('youtube.com')){
+            //     result = word.replace('src=', '').replace(new RegExp('"', 'g'), '')
+            // }
 
             if (word.includes('mp4=')) {
                 const string = word.replace(new RegExp('mp4=', 'g'), '')
@@ -152,7 +152,7 @@ class VideoPlay extends React.PureComponent {
 
 
         <View>
-            <View style={{ borderBottomWidth: 1 , borderColor: '#e0e0e0'}}>
+            <View style={{ borderBottomWidth: 1 , paddingHorizontal: 10, borderColor: '#e0e0e0'}}>
                  <View style={{ height: 130}}>
                      <TouchableWithoutFeedback
                          onPress={() => this.changeVideo(item)}
@@ -176,7 +176,7 @@ class VideoPlay extends React.PureComponent {
                                        </View> : <View></View>
                                      }
                                  </View>
-                                 <BaomoiText style={{fontSize: 18,fontWeight: 'bold', lineHeight: 26.5, color: this.props.UI.textColor}}>{item.title.plaintitle}</BaomoiText>
+                                 <BaomoiText style={{fontSize: 17,fontWeight: 'bold', lineHeight: 25, color: this.props.UI.textColor}}>{item.title.plaintitle}</BaomoiText>
                              </View>
                              <View style={{height: 90, flex: 1, justifyContent:'flex-end'}}>
                                  <FastImage
@@ -234,16 +234,18 @@ class VideoPlay extends React.PureComponent {
                 <View style={styles.videoContainer}>
                 <VideoContent src={this.getUri(this.props.article)} paused={this.state.paused} handlePlay={this.handlePlayAndPause}/>
                 </View>
-                      <ScrollView style={{flex:1, padding: 10, backgroundColor: backgroundColor}} ref={ref => this.props.setScrollViewRef(ref)}>
+                      <ScrollView style={{flex:1, paddingVertical: 10, backgroundColor: backgroundColor}} ref={ref => this.props.setScrollViewRef(ref)}>
 
-                              {this.props.article &&
-                                <View>
-                                  <BaomoiText style={{color: '#C0C0C0', fontSize: 16*textSizeRatio, marginBottom: 5}}>{this.props.article.taxonomy_source[0].name} - {moment(this.props.article.modified).fromNow().replace("trước", "").replace("một", "1")}</BaomoiText>
-                                  <BaomoiText style={{fontSize: 18*textSizeRatio, lineHeight: 26.5*textSizeRatio, fontWeight: 'bold', color: textColor}}>{this.props.article.title.plaintitle}</BaomoiText>
-                                </View>
-                               }
-                              <Divider style={{marginTop: 10, marginBottom: 10}}/>
-                              <BaomoiText style={{fontSize: 16 * textSizeRatio,color: highLightColor, marginBottom: 15, fontWeight:'500'}}>TIN KHÁC</BaomoiText>
+                              <View style={{ paddingHorizontal: 10 }}>
+                                {this.props.article &&
+                                  <View>
+                                    <BaomoiText style={{color: '#C0C0C0', fontSize: 16*textSizeRatio, marginBottom: 5}}>{this.props.article.taxonomy_source[0].name} - {moment(this.props.article.modified).fromNow().replace("trước", "").replace("một", "1")}</BaomoiText>
+                                    <BaomoiText style={{fontSize: 18*textSizeRatio, lineHeight: 26.5*textSizeRatio, fontWeight: 'bold', color: textColor}}>{this.props.article.title.plaintitle}</BaomoiText>
+                                  </View>
+                                 }
+                                <Divider style={{marginTop: 10, marginBottom: 10}}/>
+                                <BaomoiText style={{fontSize: 16 * textSizeRatio,color: highLightColor, marginBottom: 15, fontWeight:'500'}}>TIN KHÁC</BaomoiText>
+                              </View>
                               <Viewport.Tracker>
                                 <FlatList
                                   data={this.state.otherVideos}

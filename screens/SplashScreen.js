@@ -20,6 +20,7 @@ import { checkUI } from '../store/actions/UIActions';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/messaging';
 import Ads from '../components/Ads/Ads.js';
+import { NativeAdsManager, AdSettings } from 'react-native-fbads';
 import axios from 'axios';
 
 class SplashScreen extends React.Component {
@@ -54,7 +55,34 @@ class SplashScreen extends React.Component {
         this.props.checkAuth()
         this.props.checkUI()
         this.checkCustomSplashAd()
+        this.preloadNativeAd()
         this.checkCachedPosts()
+    }
+
+    preloadNativeAd = () => {
+        axios.get(acf_url + "quangcao?filter[meta_query][0][key]=platformOS&filter[meta_query][0][value]=" + Platform.OS.toString() + "&filter[meta_query][1][key]=alternativeAdViewChoice&filter[meta_query][1][value]=Native(Facebook)", {
+            cancelToken: this.cancelTokenSource.token
+        })
+        .then(async(res) => {
+            if(res.data.length) {
+                //const newAdsManager = new NativeAdsManager(res.data[0].acf.adID, 2)
+                // const adsManagers = res.data.map(ads => {
+
+                //     return { adID: ads.acf.adID, adsManager: newAdsManager }
+                // })
+
+                //console.log(newAdsManager)
+
+                //AsyncStorage.setItem('nativeAdsManager', JSON.stringify(newAdsManager))
+            }
+        })
+        .catch(err => {
+            if(axios.isCancel(err)){
+                return
+            } else {
+                console.log(err)
+            }
+        })
     }
 
     checkCustomSplashAd = () => {
@@ -74,6 +102,7 @@ class SplashScreen extends React.Component {
             }
         })
     }
+
 
     checkCachedPosts = async() => {
         let isDataCached = JSON.parse(await AsyncStorage.getItem('isDataCached'));

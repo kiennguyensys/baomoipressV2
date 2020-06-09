@@ -79,7 +79,7 @@ class CommentList extends React.PureComponent{
               'Thông báo',
               'Cần cập nhật tên và avatar để bình luận',
               [
-                {text: 'OK', onPress: () => this.props.navigation.navigate("UserProfileEdit", { UI: this.props.UI })},
+                {text: 'OK', onPress: () => this.props.navigation.navigate("UserProfileEdit", { UI: this.props.UI })}
               ],
               {cancelable: false},
             )
@@ -115,7 +115,7 @@ class CommentList extends React.PureComponent{
                     }}
                     ignoredStyles={['width', 'height', 'max-width']}
                     tagsStyles={{info:{fontSize: 12*this.props.UI.textSizeRatio, color:'#808080'}, p: {margin: 0}}}
-                    baseFontStyle={{fontSize: 18*this.props.UI.textSizeRatio, fontFamily: customFont, color: this.props.UI.textColor}}/>
+                    baseFontStyle={{fontSize: 16*this.props.UI.textSizeRatio, fontFamily: customFont, color: this.props.UI.textColor}}/>
 
                     <TouchableOpacity style={{marginTop:5 }} onPress={()=> this.handleOpenModal(item)}>
                       <Text style={{color: '#808080', fontSize: 14}}>Trả lời</Text>

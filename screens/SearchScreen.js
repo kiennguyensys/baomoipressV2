@@ -230,7 +230,7 @@ class SearchScreen extends React.Component{
 
   _renderItem = ({ item , index}) => (
       <View>
-        <View style={{ height: 130, backgroundColor: this.props.UI.backgroundColor}}>
+        <View style={{ height: 130, paddingHorizontal: 10, backgroundColor: this.props.UI.backgroundColor}}>
             <TouchableWithoutFeedback
                 onPress={() =>
                     requestAnimationFrame(() => {
@@ -262,7 +262,7 @@ class SearchScreen extends React.Component{
                                     }
                                  </View>
                             </View>
-                            <BaomoiText style={{fontSize: 17, lineHeight: 25, fontWeight: '500', color: this.props.UI.textColor}}>{item.title.plaintitle}</BaomoiText>
+                            <BaomoiText style={{fontSize: 17, lineHeight: 25, fontWeight: 'bold', color: this.props.UI.textColor}}>{item.title.plaintitle}</BaomoiText>
                         </View>
                         <FastImage
                             source={{uri :item.thumb || defaultImg}}
@@ -311,7 +311,7 @@ class SearchScreen extends React.Component{
                            />
                      </View>
 
-                     <View style={{ paddingHorizontal: 10, backgroundColor: backgroundColor}}>
+                     <View style={{backgroundColor: backgroundColor}}>
                          {this.state.animating && <View style={{ padding: 10 }}><ActivityIndicator size="large" /></View>}
                          <Viewport.Tracker>
                             <FlatList

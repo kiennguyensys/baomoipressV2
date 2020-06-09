@@ -172,14 +172,14 @@ class SideBar extends React.Component {
     }
 
    openStore = () => {
-        const baomoi_app_url = (Platform.OS == 'android') ? 'https://play.google.com/store/apps/details?id=app.baomoi.press' : 'https://baomoi.press'
+        const baomoi_app_url = (Platform.OS == 'android') ? 'market://details?id=app.baomoi.press' : 'itms-apps://itunes.apple.com/us/app/id1499212944?mt=8'
 
         Linking.canOpenURL(baomoi_app_url)
         .then((supported) => {
             if (!supported) {
                 console.log("Can't handle url: " + baomoi_app_url);
             } else {
-                return this.openWebView(baomoi_app_url);
+                return Linking.openURL(baomoi_app_url);
             }
         })
         .catch((err) => console.error('An error occurred', err));

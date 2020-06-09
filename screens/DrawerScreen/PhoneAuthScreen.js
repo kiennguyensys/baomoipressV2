@@ -21,17 +21,20 @@ class PhoneAuthScreen extends Component {
         phone: '',
         countryCode: '+84',
         expirationTimer: 120,
+        isCodeSent: false,
         verificationCode: '',
         verificationId: null,
-        signInButtonThemeColor: '#E9E9E9'
+        signInButtonThemeColor: '#E9E9E9',
+        isLinkingAccount: false
     }
 
     componentDidMount() {
+        const isLinkingAccount = this.props.navigation.getParam("isLinking")
+        this.setState({ isLinkingAccount: isLinkingAccount })
+
         this.authListener = firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                const isLinkingAccount = this.props.navigation.getParam("isLinking")
-
-                if(isLinkingAccount) {
+                if(this.state.isLinkingAccount) {
                     this.processAccountLinking(user.uid)
                 }
                 else {
@@ -42,9 +45,6 @@ class PhoneAuthScreen extends Component {
                         this.props.navigation.pop()
                     })
                 }
-
-                firebase.auth().signOut()
-
             }
         });
     }
@@ -65,7 +65,7 @@ class PhoneAuthScreen extends Component {
         if(this.state.expirationTimer === 0){
             clearInterval(this.interval);
             Alert.alert("Xin thử lại nếu không nhận được mã xác nhận")
-            this.setState({ expirationTimer: 120, verificationId: null })
+            this.setState({ expirationTimer: 120, isCodeSent: false })
         }
     }
 
@@ -74,6 +74,7 @@ class PhoneAuthScreen extends Component {
     }) => {
         const { params = {} } = navigation.state
         const { textColor, backgroundColor } = params.UI
+        const isLinkingAccount = params.isLinking
         return {
             tabBarVisible: false,
             header: () => (
@@ -92,7 +93,7 @@ class PhoneAuthScreen extends Component {
                                             navigation.goBack()
                                         }}
                         />
-                        <View style={{flex: 4, alignItems: "center"}}><Text style={{fontSize: 20, fontWeight: "bold" }}>Đăng nhập bằng SMS</Text></View>
+                        <View style={{flex: 4, alignItems: "center"}}><Text style={{fontSize: 20, fontWeight: "bold" }}>{isLinkingAccount ? 'Liên kết bằng SMS' : 'Đăng nhập bằng SMS'}</Text></View>
                         <View style={{flex: 1}}></View>
                     </SafeAreaView>
             )
@@ -118,7 +119,7 @@ class PhoneAuthScreen extends Component {
 
   onChangeVerificationCode = (verificationCode) => {
       this.setState({ verificationCode })
-      if((verificationCode.length == 6) && this.state.verificationId) {
+      if((verificationCode.length == 6) && this.state.isCodeSent) {
           this.setState({ signInButtonThemeColor: 'red' })
       }
       if((verificationCode !== 6) && (this.state.signInButtonThemeColor === 'red' )) {
@@ -143,7 +144,6 @@ class PhoneAuthScreen extends Component {
 
             if(phoneAuthSnapshot.state === firebase.auth.PhoneAuthState.ERROR) {
                 Alert.alert("Lỗi xảy ra! Xin vui lòng thử lại lúc khác")
-                alert(phoneAuthSnapshot.error)
                 return Promise.reject(
                     new Error('Code not sent!')
                 );
@@ -155,19 +155,18 @@ class PhoneAuthScreen extends Component {
             }
         })
         .then((phoneAuthSnapshot) => {
+            alert(phoneAuthSnapshot.verificationId)
+            alert(phoneAuthSnapshot.state)
+            this.setState({ verificationId: phoneAuthSnapshot.verificationId })
+            this.setState({ verificationCode: phoneAuthSnapshot.code })
+            this.setState({ isCodeSent: true })
+
             if(phoneAuthSnapshot.state === firebase.auth.PhoneAuthState.AUTO_VERIFIED){
-
-                this.setState({ verficationId: phoneAuthSnapshot.verificationId })
-                this.setState({ verificationCode: phoneAuthSnapshot.code })
-
                 const provider = firebase.auth.PhoneAuthProvider;
                 const authCredential = provider.credential( phoneAuthSnapshot.verificationId, phoneAuthSnapshot.code );
 
                 firebase.auth().signInWithCredential(authCredential);
-            } else {
-                this.setState({ verificationId: phoneAuthSnapshot.verificationId })
             }
-
             this.startExpirationTimer()
         }, (error) => {
           Alert.alert("Lỗi xảy ra, xin thử lại lúc khác")
@@ -179,9 +178,9 @@ class PhoneAuthScreen extends Component {
 
   handleVerifyCode = async() => {
     // Request for OTP verification
-    const { verificationCode, verificationId } = this.state
+    const { verificationCode, verificationId, isCodeSent } = this.state
     if (verificationCode.length == 6) {
-      if(!verificationId) Alert.alert('Bạn cần gửi mã xác thực trước')
+      if(!isCodeSent) Alert.alert('Bạn cần gửi mã xác thực trước')
       else {
         const provider = firebase.auth.PhoneAuthProvider;
         const authCredential = provider.credential( verificationId, verificationCode );
@@ -199,7 +198,9 @@ class PhoneAuthScreen extends Component {
       <SafeAreaView style={[styles.container, { backgroundColor: 'white' }]}>
         <View style={styles.title}>
             <View style={{ flex: 1, height: 1, backgroundColor: '#696969', marginRight: 10 }} />
-            <Text style={styles.titleText} multiline>Đăng nhập bằng SMS</Text>
+            <Text style={styles.titleText} multiline>
+            {this.state.isLinkingAccount ? 'Liên kết bằng SMS' : 'Đăng nhập bằng SMS'}
+            </Text>
             <View style={{ flex: 1, height: 1, backgroundColor: '#696969', marginLeft: 10 }} />
         </View>
 
@@ -259,7 +260,7 @@ class PhoneAuthScreen extends Component {
                 this.handleVerifyCode
             }>
             <Text style={styles.themeButtonTitle}>
-              Đăng nhập
+              {this.state.isLinkingAccount ? 'Liên kết' : 'Đăng nhập'}
             </Text>
          </TouchableOpacity>
 

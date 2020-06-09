@@ -63,7 +63,7 @@ class ExchangeGiftsModal extends React.Component {
             modalVisible: this.props.visible,
             selectedCarrier: null,
             loading: false,
-            buttonTitle: "gửi yêu cầu"
+            buttonTitle: "Gửi yêu cầu"
         }
     }
 
@@ -89,12 +89,12 @@ class ExchangeGiftsModal extends React.Component {
             Alert.alert("Xu của bạn không đủ để thực hiện giao dịch")
 
         }
-        else if(user.acf.birth_date.length == 0 ||
-                user.acf.gender.length == 0 ||
-                user.acf.so_thich.length == 0 ||
-                user.acf.location.length == 0 ||
-                user.acf.phoneNumber.length == 0 ||
-                user.acf.custom_email.length == 0) {
+        else if(!user.acf.birth_date ||
+                !user.acf.gender ||
+                !user.acf.so_thich ||
+                !user.acf.location || user.acf.location.length == 0 ||
+                !user.acf.phoneNumber ||
+                !user.acf.custom_email || user.acf.custom_email.length == 0) {
             this.setState({
                 buttonTitle: "Cập nhật hồ sơ"
             })

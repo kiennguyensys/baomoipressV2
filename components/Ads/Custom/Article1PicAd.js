@@ -52,7 +52,7 @@ class Article1PicAd extends React.PureComponent {
                                     </View>
                                     <Text style={{color: '#C0C0C0', fontSize: 13}}> {this.state.data.sponsorName}</Text>
                                 </View>
-                                <BaomoiText style={{fontSize: 18,fontWeight: '500', color: UI.textColor, marginTop: 5}}>{this.state.data.title}</BaomoiText>
+                                <BaomoiText style={{fontSize: 17,fontWeight: 'bold', color: UI.textColor, lineHeight: 25, marginTop: 5}}>{this.state.data.title}</BaomoiText>
 
                             </View>
                             <FastImage

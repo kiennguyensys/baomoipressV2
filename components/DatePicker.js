@@ -31,7 +31,7 @@ class DatePicker extends React.Component {
     return (
       <View>
         <TouchableOpacity onPress={this.showDatePicker} style={styles.dropDownMenu}>
-            <Text style={styles.dropDownText}>{("Ngày sinh: " + this.props.date || 'Select Date of birth')}</Text>
+            <Text style={styles.dropDownText}>{("Ngày sinh: " + (this.props.date || "Chưa cập nhật") || 'Select Date of birth')}</Text>
         </TouchableOpacity>
         <DateTimePickerModal
           isVisible={this.state.isDatePickerVisible}

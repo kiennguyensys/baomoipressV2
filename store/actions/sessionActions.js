@@ -289,7 +289,6 @@ const pushFCMTokenToServer = async() => {
         })
         .then((res) => {
             if(res.status == 200) {
-                console.log("push fcmToken successfullly")
             }
         })
         .catch(err => {
